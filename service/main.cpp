@@ -222,13 +222,13 @@ int getAmbientLightPercent() {
 
     float percent = 0;
 
-    percent = (int)( log( als / 10000.0 * 230 + 0.94 ) * 18 ) / 5 * 5;
+    percent = (int)( log( als / 10000.0 * 230 + 0.94 ) * 18 ) / 10 * 10;
 
     if (percent > 100)
       percent = 100;
     else
-      if (percent < 5)
-        percent = 5;
+      if (percent < 10)
+        percent = 10;
 
     /* switch(als) {
     case 0x32:
