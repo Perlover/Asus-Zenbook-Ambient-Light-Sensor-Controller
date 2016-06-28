@@ -29,6 +29,7 @@
 #include <errno.h>
 #include <err.h>
 #include <bsd/libutil.h>
+#include <math.h>
 
 using namespace std;
 
@@ -221,10 +222,13 @@ int getAmbientLightPercent() {
 
     float percent = 0;
 
-    percent = (int)( als / 22000.0 * 100 );
+    percent = (int)( log( als / 22000.0 * 230 + 0.94 ) * 18 ) / 5 * 5;
 
-    if ( percent > 100 )
+    if (percent > 100)
       percent = 100;
+    else
+      if (percent < 0)
+        percent = 0;
 
     /* switch(als) {
     case 0x32:
@@ -334,7 +338,7 @@ void startDaemon()
                 setKeyboardBacklight(0);
 	    }
 
-	    setScreenBacklight(20 + ( (als / 5 * 5) / 100.0 * 80) );
+	    setScreenBacklight(als);
 
             /*if(als <= 10) {
                 setScreenBacklight(40);
