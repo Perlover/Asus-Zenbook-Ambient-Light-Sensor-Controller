@@ -227,8 +227,8 @@ int getAmbientLightPercent() {
     if (percent > 100)
       percent = 100;
     else
-      if (percent < 0)
-        percent = 0;
+      if (percent < 5)
+        percent = 5;
 
     /* switch(als) {
     case 0x32:
