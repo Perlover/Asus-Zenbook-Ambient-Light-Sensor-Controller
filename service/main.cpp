@@ -222,7 +222,7 @@ int getAmbientLightPercent() {
 
     float percent = 0;
 
-    percent = (int)( log( als / 22000.0 * 230 + 0.94 ) * 18 ) / 5 * 5;
+    percent = (int)( log( als / 10000.0 * 230 + 0.94 ) * 18 ) / 5 * 5;
 
     if (percent > 100)
       percent = 100;
