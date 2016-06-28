@@ -130,7 +130,7 @@ int getScreenBacklightMax()
         syslog(LOG_ERR, "Error opening %s", path.c_str());
         return 0;
     }
-    
+
     char str[100];
     int count = read(fd, str, sizeof(str));
     if (count == -1) return 0;
@@ -221,7 +221,12 @@ int getAmbientLightPercent() {
 
     float percent = 0;
 
-    switch(als) {
+    percent = (int)( als / 22000.0 * 100 );
+
+    if ( percent > 100 )
+      percent = 100;
+
+    /* switch(als) {
     case 0x32:
         percent = 10;
         break;
@@ -237,7 +242,7 @@ int getAmbientLightPercent() {
     case 0x320:
         percent = 100;
         break;
-    }
+    }*/
 
     return percent;
 }
