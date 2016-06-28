@@ -327,7 +327,16 @@ void startDaemon()
             float als = getAmbientLightPercent();
             //printf("Illuminance percent: %f\n", als);
 
-            if(als <= 10) {
+	    if (als <= 10) {
+                setKeyboardBacklight(100);
+	    }
+	    else {
+                setKeyboardBacklight(0);
+	    }
+
+	    setScreenBacklight(20 + ( (als / 5 * 5) / 100.0 * 80) );
+
+            /*if(als <= 10) {
                 setScreenBacklight(40);
                 setKeyboardBacklight(100);
             } else if(als <= 25) {
@@ -342,7 +351,7 @@ void startDaemon()
             } else if(als <= 100) {
                 setScreenBacklight(100);
                 setKeyboardBacklight(0);
-            }
+            }*/
         }
 
         sleep(3);
