@@ -3,15 +3,8 @@ Asus Zenbook Ambient Light Sensor Controller
 
 Tested with:
 ------------
- * UX32VD
-   * Ubuntu 15.04 + Linux 3.19.0
-   * Ubuntu 14.10 + Linux 3.16.0
-   * Ubuntu 14.04 + Linux 3.13.0
-   * Ubuntu 13.10 + Linux 3.11.0
-   * Ubuntu 13.04 + Linux 3.8.0
- * UX31A
-   * Ubuntu 14.04
-   * Ubuntu 13.10
+ * UX305
+   * Ubuntu 16.04 + Linux 4.4.0
 
 How to install
 --------------
@@ -22,18 +15,25 @@ How to install
    1. Download the source code from [here](https://github.com/danieleds/als).
    2. Extract the archive, move into the directory, and compile with `make`.
    3. Insert the module into your current kernel with `sudo insmod als.ko`
+     1. `sudo cp als.ko /lib/modules/$(uname -r)/`
+     2. `sudo bash -c 'echo als >>/etc/modules && sudo depmod'`
+     3. `sudo bash -c 'echo "blacklist acpi_als" >/etc/modprobe.d/blacklist-acpi_als.conf'`
  2. Build this controller:
    1. `cd service`
    2. `qmake als-controller.pro -r -spec linux-g++-64`, or `qmake als-controller.pro -r -spec linux-g++` if you're on a 32-bit system.
    3. `make`
-   
+   4. `sudo cp als-controller /usr/local/bin/`
+   5. `sudo bash -c 'echo "/usr/local/bin/als-controller && /usr/local/bin/als-controller -e" >>/etc/rc.local'`
+   6. restart notebook
+
 The generated binary file, *als-controller*, is what will monitor the light sensor.
 
 How to use
 ----------
+**After reboot brightness will be corrected by auto**
  1. Launch als-controller with root privileges, for example: `sudo ./als-controller`. This will be the service that monitors the light sensor.
  2. Use the same program with user privileges, als-controller, to control the service. Some examples:
-    
+
         ./als-controller -e     // Enable the sensor
         ./als-controller -d     // Disable the sensor
         ./als-controller -s     // Get sensor status (enabled/disabled)
